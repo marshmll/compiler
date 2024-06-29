@@ -1,4 +1,4 @@
-#[derive(Debug, PartialEq)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum TokenKind {
     Number(i64),
     Plus,
@@ -12,7 +12,7 @@ pub enum TokenKind {
     EOF,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct TextSpan {
     pub(crate) start: usize,
     pub(crate) end: usize,
@@ -33,7 +33,7 @@ impl TextSpan {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Token {
     pub(crate) kind: TokenKind,
     pub(crate) span: TextSpan,
@@ -138,10 +138,6 @@ impl<'a> Lexer<'a> {
     }
 
     fn consume(&mut self) -> Option<char> {
-        if self.current_pos >= self.input.len() {
-            return None;
-        }
-
         let c = self.current_char();
         self.current_pos += 1;
 
