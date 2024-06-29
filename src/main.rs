@@ -1,9 +1,9 @@
-use ast::{lexer::Lexer, parser::Parser, AST};
+use ast::{evaluator::Evaluator, lexer::Lexer, parser::Parser, AST};
 
 mod ast;
 
 fn main() {
-    let input = "(8 + 1) + 2";
+    let input = "1 + 1";
 
     let mut lexer = Lexer::new(input);
     let mut tokens = Vec::new();
@@ -22,4 +22,9 @@ fn main() {
     }
 
     ast.visualize();
+
+    let mut eval = Evaluator::new();
+    ast.visit(&mut eval);
+
+    println!("Result: {:?}", eval.last_value);
 }
